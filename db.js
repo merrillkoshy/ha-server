@@ -10,7 +10,9 @@ const connectionString = `postgresql://${process.env.PG_USER}:${process.env.PG_P
 
 var db = pgp({
 	connectionString: isProduction ? process.env.DATABASE_URL : connectionString,
-	ssl: true,
+	ssl: {
+		rejectUnauthorized: false,
+	},
 });
 
 module.exports = db;
