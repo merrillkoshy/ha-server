@@ -1,0 +1,21 @@
+{
+	"name": "ha-server",
+	"version": "1.0.0",
+	"description": "psql for ha",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"start": "node index.js"
+	},
+	"author": "merrill-koshy-thomas",
+	"license": "MIT",
+	"engines": {
+		"node": "14.x"
+	},
+	"dependencies": {
+		"cors": "^2.8.5",
+		"dotenv": "^10.0.0",
+		"express": "^4.17.1",
+		"pg": "^8.7.1"
+	}
+}
