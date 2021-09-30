@@ -2,6 +2,7 @@ var promise = require("bluebird");
 var options = {
 	// Initialization Options
 	promiseLib: promise,
+	ssl: true,
 };
 require("dotenv").config();
 const isProduction = process.env.NODE_ENV === "production";
