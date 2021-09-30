@@ -10,5 +10,6 @@ var connectionString = isProduction
 	? process.env.DATABASE_URL
 	: connectionString;
 var db = pgp(connectionString);
+pgp.pg.defaults.ssl = true;
 
 module.exports = db;
