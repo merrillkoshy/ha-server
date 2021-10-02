@@ -29,14 +29,11 @@ app.get("/listing", (req, res) => {
 });
 
 app.post("/listing", async (req, res) => {
-	createListing(req, res)
-		.then((res) => {
-			res.header("Access-Control-Allow-Origin", "*");
-			res.status(200).json(res);
-		})
-		.catch((error) => {
-			res.status(500).send(error);
-		});
+	try {
+		createListing(req, res);
+	} catch (error) {
+		res.status(500).send(error);
+	}
 });
 
 app.delete("/listing/:id", (req, res) => {
