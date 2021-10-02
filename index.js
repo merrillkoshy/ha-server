@@ -37,22 +37,16 @@ app.post("/listing", async (req, res) => {
 });
 
 app.delete("/listing/:id", (req, res) => {
-	if (req.headers.jwtSecret == process.env.jwtSecret) {
-		deleteListing(req.params.id)
-			.then((res) => {
-				res.header("Access-Control-Allow-Origin", "*");
-				res.status(200).send(res);
-			})
-			.catch((error) => {
-				res.status(500).send(error);
-			});
-	} else {
-		res.json({
-			info:
-				"Else you could contact me : https://www.linkedin.com/in/merrill-koshy-thomas",
+	deleteListing(req, res)
+		.then((res) => {
+			res.header("Access-Control-Allow-Origin", "*");
+			res.status(200).send(res);
+		})
+		.catch((error) => {
+			res.status(500).send(error);
 		});
-	}
 });
+
 app.listen(port, () => {
 	console.log(`App running on port ${port}.`);
 });

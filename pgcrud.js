@@ -16,28 +16,28 @@ const createListing = (req, res) => {
 	const {
 		id,
 		price,
-		currencycode,
-		stringedAddress,
+		currencyCode,
+		address,
 		type,
 		kind,
 		description,
 		deposit,
-		estimatedbills,
-		minimumstaymonths,
-		maxbookabledays,
-		moveinwindow,
-		currentoccupancy,
-		stringedRules,
-		minage,
-		maxage,
-		preferredgender,
+		estimatedBills,
+		minimumStayMonths,
+		maxBookableDays,
+		moveInWindow,
+		currentOccupancy,
+		rules,
+		minAge,
+		maxAge,
+		preferredGender,
 		alias,
-		externalreference,
-		extradata,
-		stringedFacilities,
-		calendaroperations,
-		stringedImages,
-		stringedCosts,
+		externalReference,
+		extraData,
+		facilities,
+		calendarOperations,
+		images,
+		costs,
 	} = body;
 
 	pool
@@ -46,28 +46,28 @@ const createListing = (req, res) => {
 			[
 				id,
 				price,
-				currencycode,
-				stringedAddress,
+				currencyCode,
+				address,
 				type,
 				kind,
 				description,
 				deposit,
-				estimatedbills,
-				minimumstaymonths,
-				maxbookabledays,
-				moveinwindow,
-				currentoccupancy,
-				stringedRules,
-				minage,
-				maxage,
-				preferredgender,
+				estimatedBills,
+				minimumStayMonths,
+				maxBookableDays,
+				moveInWindow,
+				currentOccupancy,
+				rules,
+				minAge,
+				maxAge,
+				preferredGender,
 				alias,
-				externalreference,
-				extradata,
-				stringedFacilities,
-				calendaroperations,
-				stringedImages,
-				stringedCosts,
+				externalReference,
+				extraData,
+				facilities,
+				calendarOperations,
+				images,
+				costs,
 			]
 		)
 		.then((data) => {
@@ -78,15 +78,18 @@ const createListing = (req, res) => {
 			res.status(500).send(err);
 		});
 };
-const deleteListing = (id) => {
-	return new Promise(function(resolve, reject) {
-		pool.query("DELETE FROM hadata WHERE id = $1", [id], (error, results) => {
-			if (error) {
-				reject(error);
-			}
-			resolve(`Listing deleted with ID: ${id}`);
+const deleteListing = (req, res) => {
+	const id = req.params.id;
+
+	pool
+		.any("DELETE FROM hadata WHERE id = $1", [id])
+		.then((data) => {
+			res.header("Access-Control-Allow-Origin", "*");
+			res.status(200).send(data);
+		})
+		.catch((err) => {
+			res.status(500).send(err);
 		});
-	});
 };
 
 module.exports = {
