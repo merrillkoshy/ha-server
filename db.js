@@ -1,19 +1,20 @@
-var promise = require("bluebird");
-var options = {
-	// Initialization Options
-	promiseLib: promise,
-};
-require("dotenv").config();
-const isProduction = process.env.NODE_ENV === "production";
-var pgp = require("pg-promise")(options);
+const { Pool, Client } = require("pg");
+
 const connectionString = `postgresql://${process.env.PG_USER}:${process.env.PG_PASSWORD}@${process.env.PG_HOST}:${process.env.PG_PORT}/${process.env.PG_DATABASE}`;
 
-var db = pgp({
-	connectionString: isProduction ? process.env.DATABASE_URL : connectionString,
-	ssl: {
-		rejectUnauthorized: false,
-	},
-	capSQL: true,
+const pool = new Pool({
+	connectionString,
 });
-
-module.exports = { db, pgp };
+pool.query("SELECT NOW()", (err, res) => {
+	console.log(err, res);
+	pool.end();
+});
+const client = new Client({
+	connectionString,
+});
+client.connect();
+client.query("SELECT NOW()", (err, res) => {
+	console.log(err, res);
+	client.end();
+});
+module.exports = { pool, client };
