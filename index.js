@@ -22,6 +22,7 @@ app.post("/listing", async (req, res) => {
 	if (req.headers.jwtToken == process.env.jwtSecret) {
 		createListing(req, res)
 			.then((response) => {
+				res.header("Access-Control-Allow-Origin", "*");
 				res.status(200).json(response);
 			})
 			.catch((error) => {
@@ -39,6 +40,7 @@ app.delete("/listing/:id", (req, res) => {
 	if (req.headers.jwtToken == process.env.jwtSecret) {
 		deleteListing(req.params.id)
 			.then((response) => {
+				res.header("Access-Control-Allow-Origin", "*");
 				res.status(200).send(response);
 			})
 			.catch((error) => {
