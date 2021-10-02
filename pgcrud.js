@@ -1,4 +1,6 @@
-const pool = require("./db");
+const pool = require("./db").db;
+const pgp = require("./db").pgp;
+
 require("dotenv").config();
 const getListings = (req, res) => {
 	pool
@@ -39,37 +41,40 @@ const createListing = (req, res) => {
 		images,
 		costs,
 	} = body;
+	// const addressCs=new pgp.helpers.ColumnSet([],)
+	const cs = new pgp.helpers.ColumnSet(
+		[
+			"id",
+			"price",
+			"currencyCode",
+			"address",
+			"type",
+			"kind",
+			"description",
+			"deposit",
+			"estimatedBills",
+			"minimumStayMonths",
+			"maxBookableDays",
+			"moveInWindow",
+			"currentOccupancy",
+			"rules",
+			"minAge",
+			"maxAge",
+			"preferredGender",
+			"alias",
+			"externalReference",
+			"extraData",
+			"facilities",
+			"calendarOperations",
+			"images",
+			"costs",
+		],
+		{ table: "hadata" }
+	);
 
 	pool
-		.any(
-			"INSERT INTO hadata(id,price,currencyCode,address,type,kind,description,deposit,estimatedBills,minimumStayMonths,maxBookableDays,moveInWindow,currentOccupancy,rules,minAge,maxAge,preferredGender,alias,externalReference,extraData,facilities,calendarOperations,images,costs) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23 , $24)",
-			[
-				id,
-				price,
-				currencyCode,
-				address,
-				type,
-				kind,
-				description,
-				deposit,
-				estimatedBills,
-				minimumStayMonths,
-				maxBookableDays,
-				moveInWindow,
-				currentOccupancy,
-				rules,
-				minAge,
-				maxAge,
-				preferredGender,
-				alias,
-				externalReference,
-				extraData,
-				facilities,
-				calendarOperations,
-				images,
-				costs,
-			]
-		)
+		.any(pgp.helpers.insert(body, cs))
+
 		.then((data) => {
 			res.header("Access-Control-Allow-Origin", "*");
 			res.status(200).send(data);

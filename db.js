@@ -13,6 +13,7 @@ var db = pgp({
 	ssl: {
 		rejectUnauthorized: false,
 	},
+	capSQL: true,
 });
 
-module.exports = db;
+module.exports = { db, pgp };
