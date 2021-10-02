@@ -31,15 +31,15 @@ app.get("/listing", (req, res) => {
 app.post("/listing", async (req, res) => {
 	if (req.headers.jwtToken == process.env.jwtSecret) {
 		createListing(req, res)
-			.then((response) => {
+			.then((res) => {
 				res.header("Access-Control-Allow-Origin", "*");
-				res.status(200).json(response);
+				res.status(200).json(res);
 			})
 			.catch((error) => {
 				res.status(500).send(error);
 			});
 	} else {
-		response.json({
+		res.json({
 			info:
 				"Else you could contact me : https://www.linkedin.com/in/merrill-koshy-thomas",
 		});
@@ -49,15 +49,15 @@ app.post("/listing", async (req, res) => {
 app.delete("/listing/:id", (req, res) => {
 	if (req.headers.jwtToken == process.env.jwtSecret) {
 		deleteListing(req.params.id)
-			.then((response) => {
+			.then((res) => {
 				res.header("Access-Control-Allow-Origin", "*");
-				res.status(200).send(response);
+				res.status(200).send(res);
 			})
 			.catch((error) => {
 				res.status(500).send(error);
 			});
 	} else {
-		response.json({
+		res.json({
 			info:
 				"Else you could contact me : https://www.linkedin.com/in/merrill-koshy-thomas",
 		});
