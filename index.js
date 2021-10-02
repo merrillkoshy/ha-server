@@ -29,25 +29,18 @@ app.get("/listing", (req, res) => {
 });
 
 app.post("/listing", async (req, res) => {
-	if (req.headers.jwtToken == process.env.jwtSecret) {
-		createListing(req, res)
-			.then((res) => {
-				res.header("Access-Control-Allow-Origin", "*");
-				res.status(200).json(res);
-			})
-			.catch((error) => {
-				res.status(500).send(error);
-			});
-	} else {
-		res.json({
-			info:
-				"Else you could contact me : https://www.linkedin.com/in/merrill-koshy-thomas",
+	createListing(req, res)
+		.then((res) => {
+			res.header("Access-Control-Allow-Origin", "*");
+			res.status(200).json(res);
+		})
+		.catch((error) => {
+			res.status(500).send(error);
 		});
-	}
 });
 
 app.delete("/listing/:id", (req, res) => {
-	if (req.headers.jwtToken == process.env.jwtSecret) {
+	if (req.headers.jwtSecret == process.env.jwtSecret) {
 		deleteListing(req.params.id)
 			.then((res) => {
 				res.header("Access-Control-Allow-Origin", "*");
