@@ -4,8 +4,12 @@ const port = process.env.PORT || 3001;
 
 const { getListings, createListing, deleteListing } = require("./pgcrud");
 const cors = require("cors");
-
-app.use(cors());
+const corsOptions = {
+	origin: "*",
+	credentials: true, //access-control-allow-credentials:true
+	optionSuccessStatus: 200,
+};
+app.use(cors(corsOptions));
 app.use(express.json());
 app.get("/", (request, response) => {
 	response.json({ info: "A House for HA's server. Built by Merrill." });
