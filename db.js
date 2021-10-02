@@ -4,17 +4,12 @@ const connectionString = `postgresql://${process.env.PG_USER}:${process.env.PG_P
 
 const pool = new Pool({
 	connectionString,
+	ssl: { rejectUnauthorized: false },
 });
-pool.query("SELECT NOW()", (err, res) => {
-	console.log(err, res);
-	pool.end();
-});
+
 const client = new Client({
 	connectionString,
 });
 client.connect();
-// client.query("SELECT NOW()", (err, res) => {
-// 	console.log(err, res);
-// 	client.end();
-// });
+
 module.exports = { pool, client };
