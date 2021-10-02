@@ -11,6 +11,12 @@ const corsOptions = {
 };
 app.use(cors(corsOptions));
 app.use(express.json());
+app.options("/listing", function(req, res) {
+	res.setHeader("Access-Control-Allow-Origin", "*");
+	res.setHeader("Access-Control-Allow-Methods", "*");
+	res.setHeader("Access-Control-Allow-Headers", "*");
+	res.end();
+});
 app.get("/", (request, response) => {
 	response.json({ info: "A House for HA's server. Built by Merrill." });
 });
