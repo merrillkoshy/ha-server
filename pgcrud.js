@@ -1,6 +1,6 @@
 const pool = require("./db").pool;
 const client = require("./db").client;
-const pgp = require("./db").pgp;
+// const pgp = require("./db").pgp;
 
 require("dotenv").config();
 const getListings = (req, res) => {
