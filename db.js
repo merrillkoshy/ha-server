@@ -9,6 +9,7 @@ const pool = new Pool({
 
 const client = new Client({
 	connectionString,
+	ssl: { rejectUnauthorized: false },
 });
 client.connect();
 
