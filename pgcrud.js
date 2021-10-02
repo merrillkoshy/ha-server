@@ -39,50 +39,44 @@ const createListing = (req, res) => {
 		images,
 		costs,
 	} = body;
-	if (req.headers.jwtSecret == process.env.jwtSecret) {
-		pool
-			.none(
-				"INSERT INTO hadata(id,price,currencyCode,address,type,kind,description,deposit,estimatedBills,minimumStayMonths,maxBookableDays,moveInWindow,currentOccupancy,rules,minAge,maxAge,preferredGender,alias,externalReference,extraData,facilities,calendarOperations,images,costs) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23 , $24)",
-				[
-					id,
-					price,
-					currencyCode,
-					address,
-					type,
-					kind,
-					description,
-					deposit,
-					estimatedBills,
-					minimumStayMonths,
-					maxBookableDays,
-					moveInWindow,
-					currentOccupancy,
-					rules,
-					minAge,
-					maxAge,
-					preferredGender,
-					alias,
-					externalReference,
-					extraData,
-					facilities,
-					calendarOperations,
-					images,
-					costs,
-				]
-			)
-			.then((data) => {
-				res.header("Access-Control-Allow-Origin", "*");
-				res.status(200).send(data);
-			})
-			.catch((err) => {
-				res.status(500).send(err);
-			});
-	} else {
-		res.json({
-			info:
-				"Else you could contact me : https://www.linkedin.com/in/merrill-koshy-thomas",
+
+	pool
+		.none(
+			"INSERT INTO hadata(id,price,currencyCode,address,type,kind,description,deposit,estimatedBills,minimumStayMonths,maxBookableDays,moveInWindow,currentOccupancy,rules,minAge,maxAge,preferredGender,alias,externalReference,extraData,facilities,calendarOperations,images,costs) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23 , $24)",
+			[
+				id,
+				price,
+				currencyCode,
+				address,
+				type,
+				kind,
+				description,
+				deposit,
+				estimatedBills,
+				minimumStayMonths,
+				maxBookableDays,
+				moveInWindow,
+				currentOccupancy,
+				rules,
+				minAge,
+				maxAge,
+				preferredGender,
+				alias,
+				externalReference,
+				extraData,
+				facilities,
+				calendarOperations,
+				images,
+				costs,
+			]
+		)
+		.then((data) => {
+			res.header("Access-Control-Allow-Origin", "*");
+			res.status(200).send(data);
+		})
+		.catch((err) => {
+			res.status(500).send(err);
 		});
-	}
 };
 const deleteListing = (id) => {
 	return new Promise(function(resolve, reject) {
