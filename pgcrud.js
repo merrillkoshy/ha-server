@@ -8,7 +8,7 @@ const getListings = (req, res) => {
 		if (err) {
 			res.status(500).send(err.stack);
 		} else {
-			res.status(200).json(data.rows[0]);
+			res.status(200).json(data.rows);
 		}
 	});
 };
