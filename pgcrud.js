@@ -83,16 +83,15 @@ const createListing = (req, res) => {
 };
 const deleteListing = (req, res) => {
 	const id = req.params.id;
-
-	pool
-		.any("DELETE FROM hadata WHERE id = $1", [id])
-		.then((data) => {
+	const deleteQuery = "DELETE FROM hadata WHERE id = $1";
+	client.query(deleteQuery, [id], (err, data) => {
+		if (err) {
+			res.status(500).send(err.stack);
+		} else {
 			res.header("Access-Control-Allow-Origin", "*");
-			res.status(200).send(data);
-		})
-		.catch((err) => {
-			res.status(500).send(err);
-		});
+			res.status(200).send("success");
+		}
+	});
 };
 
 module.exports = {
