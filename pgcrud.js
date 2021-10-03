@@ -93,9 +93,22 @@ const deleteListing = (req, res) => {
 		}
 	});
 };
-
+const updateListing = (req, res) => {
+	const body = req.body;
+	const { id, price, currencyCode } = body;
+	const updateQuery =
+		"UPDATE hadata SET (price,currencyCode)= ($1, $2) WHERE id= $3";
+	client.query(updateQuery, [price, currencyCode, id], (err, data) => {
+		if (err) {
+			res.status(500).send(err.stack);
+		} else {
+			res.status(200).json(data.rows);
+		}
+	});
+};
 module.exports = {
 	getListings,
 	createListing,
 	deleteListing,
+	updateListing,
 };

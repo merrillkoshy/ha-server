@@ -2,7 +2,12 @@ const express = require("express");
 const app = express();
 const port = process.env.PORT || 3001;
 
-const { getListings, createListing, deleteListing } = require("./pgcrud");
+const {
+	getListings,
+	createListing,
+	deleteListing,
+	updateListing,
+} = require("./pgcrud");
 const cors = require("cors");
 const corsOptions = {
 	origin: "*",
@@ -31,6 +36,13 @@ app.get("/listing", (req, res) => {
 app.post("/listing", async (req, res) => {
 	try {
 		createListing(req, res);
+	} catch (error) {
+		res.status(500).send(error);
+	}
+});
+app.put("/listing", async (req, res) => {
+	try {
+		updateListing(req, res);
 	} catch (error) {
 		res.status(500).send(error);
 	}
